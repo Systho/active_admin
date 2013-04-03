@@ -11,7 +11,9 @@ module ActiveAdmin
     #
     # @returns A concrete subclass of AbstractReloader
     def self.build(rails_app, active_admin_app, rails_version)
-      reloader_class = rails_version[0..2] == "3.2" ? Rails32Reloader : RailsLessThan31Reloader
+      reloader_class = RailsLessThan31Reloader
+      reloader_class = Rails32Reloader if rails_version[0..2] == "3.2"
+      reloader_class = Rails32Reloader if rails_version[0] == "4"
       reloader_class.new(rails_app, active_admin_app, rails_version)
     end
 
